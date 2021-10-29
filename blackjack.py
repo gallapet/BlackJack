@@ -23,7 +23,6 @@ class BlackJackGame:
         x = PlayingCardDeck()
         x.shuffle()
         self._deck = x.deck    
-        self.aces = {"Ace of Spades", "Ace of Diamonds", "Ace of Hearts", "Ace of Clubs"}
         self._dealer = Dealer()
         self._player = Player()
         self.player_finished = False
@@ -34,15 +33,7 @@ class BlackJackGame:
         self._player.take_card(self._deck.pop(0))  # Player card 1
         self._dealer.take_card(self._deck.pop(0))  # Dealer card 1
         self._player.take_card(self._deck.pop(0))  # Player card 2
-        self._dealer.take_card(self._deck.pop(0))  # Dealer card 2        
-    '''
-    def ace_value(self):
-        final_value = self.Person.get_value()
-        if self.aces & set(self.Person._cards) and self.Person.get_value() > 21 :
-            return final_value - 10
-        else:
-            return final_value
-    '''     
+        self._dealer.take_card(self._deck.pop(0))  # Dealer card 2         
         
     def play(self):
         print("------------------------------------------------------------------------------------------------")
