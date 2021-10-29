@@ -1,3 +1,5 @@
+"""Module for playing Blackjack. Requires blackjack.py"""
+
 import blackjack
 
 p = blackjack.PlayingCardDeck()
