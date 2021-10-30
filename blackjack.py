@@ -23,7 +23,7 @@ class BlackJackGame:
     def __init__(self):
         x = PlayingCardDeck()
         x.shuffle()
-        self._deck = x.deck    
+        self._deck = x.deck * 6    
         self._dealer = Dealer()
         self._player = Player()
         self.player_finished = False
@@ -82,26 +82,22 @@ class Hand:
     def __init__(self, cards):
         self._cards = cards
         self.card_value = 0
-
-    def value_of_cards(self):
-        """Calculates the value of the cards in play"""
-        values = {'02': 2, '03': 3, '04': 4,
+        self.ace_count = 0
+        self.values = {'02': 2, '03': 3, '04': 4,
                   '05': 5, '06': 6, '07': 7, 
                   '08': 8, '09': 9, '10': 10, 
                   'Ja': 10, 'Qu': 10, 'Ki': 10,
                   'Ac': 11}
 
-        number_of_aces = 0
-
+    def value_of_cards(self):
+        """Calculates the value of the cards in play"""
         for card in self._cards:
             if card[:2] == 'Ac':
-                number_of_aces += 1
-            self.card_value += values[card[:2]]
-
-        while self.card_value > 21 and number_of_aces > 0:
+                self.ace_count += 1
+            self.card_value += self.values[card[:2]]
+        while self.card_value > 21 and self.ace_count > 0:
             self.card_value -= 10
-            number_of_aces -= 1
-
+            self.ace_count -= 1
         return self.card_value
     
 class Person:
