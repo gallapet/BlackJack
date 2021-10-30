@@ -43,34 +43,34 @@ class BlackJackGame:
         print("------------------------------------------------------------------------------------------------")
         print(f"You have been dealt {self._player._cards[0]} and {self._player._cards[1]}.")
         print(f"The Dealer has {self._dealer._cards[0]}.")
-        if self._player.ace_value() == 21:  # Auto stand on being dealt 21
+        if self._player.get_value() == 21:  # Auto stand on being dealt 21
             self.player_finished = True
         while not self.player_finished:
-            player_choice = input(f"You have {self._player.ace_value()}. Do you want to stand or hit? ")
+            player_choice = input(f"You have {self._player.get_value()}. Do you want to stand or hit? ")
             print("------------------------------------------------------------------------------------------------")
-            if player_choice.startswith("h") and self._player.ace_value() < 21:
+            if player_choice.startswith("h") and self._player.get_value() < 21:
                 self._player.take_card(self._deck.pop(0))
                 print("You now have " + ' and '.join(self._player._cards))
-                if self._player.ace_value() > 21:  # Check if player is bust
+                if self._player.get_value() > 21:  # Check if player is bust
                     print("Bust!")
                     self._player._bust = True
                     self.player_finished = self.dealer_finished = True
             elif player_choice.startswith("s"):
                 self.player_finished = True
-        while self._dealer.ace_value() < 17 and not self.dealer_finished:
+        while self._dealer.get_value() < 17 and not self.dealer_finished:
             self._dealer.take_card(self._deck.pop(0))
-            if self._dealer.ace_value() > 21:  # Check if dealer is bust
+            if self._dealer.get_value() > 21:  # Check if dealer is bust
                 print("Dealer Bust!")
                 self._dealer._bust = True    
         BlackJackGame.result(self)  # Display result of the game
 
     def result(self):
-        print(f"You: {self._player._cards} [{self._player.ace_value()}]")
-        print(f"Dealer: {self._dealer._cards} [{self._dealer.ace_value()}]")
-        if (self._player.ace_value() < self._dealer.ace_value() and self._dealer._bust == False) or self._player._bust == True:
+        print(f"You: {self._player._cards} [{self._player.get_value()}]")
+        print(f"Dealer: {self._dealer._cards} [{self._dealer.get_value()}]")
+        if (self._player.get_value() < self._dealer.get_value() and self._dealer._bust == False) or self._player._bust == True:
             # Dealer wins if: player is bust or has a lower card value
             print("Dealer Wins!")
-        elif (self._player.ace_value() > self._dealer.ace_value() and self._player._bust == False) or self._dealer._bust == True:
+        elif (self._player.get_value() > self._dealer.get_value() and self._player._bust == False) or self._dealer._bust == True:
             # Player wins if: dealer is bust or has a lower card value 
             print("You Win!")
         else:
@@ -90,8 +90,18 @@ class Hand:
                   '08': 8, '09': 9, '10': 10, 
                   'Ja': 10, 'Qu': 10, 'Ki': 10,
                   'Ac': 11}
+
+        number_of_aces = 0
+
         for card in self._cards:
+            if card[:2] == 'Ac':
+                number_of_aces += 1
             self.card_value += values[card[:2]]
+
+        while self.card_value > 21 and number_of_aces > 0:
+            self.card_value -= 10
+            number_of_aces -= 1
+
         return self.card_value
     
 class Person:
@@ -109,15 +119,7 @@ class Person:
         """Gets the value of each players' hand"""
         hand = Hand(self._cards) 
         return hand.value_of_cards()
-    
-    def ace_value(self):
-        """The final value of each players' hand, corrected for ace values of 1 or 11"""
-        final_value = Person.get_value(self)
-        if self.aces & set(self._cards) and Person.get_value(self) > 21 :
-            return final_value - 10
-        else:
-            return final_value
-        
+
 class Player(Person):
     def __init__(self):
         super().__init__()    
