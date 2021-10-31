@@ -7,7 +7,7 @@ class PlayingCardDeck:
     def __init__(self):
         """Generate a card deck."""
         suits = ['Hearts', 'Spades', 'Clubs', 'Diamonds']
-        ranks = ['Ace', '02', '03', '04', '05', '06', '07', '08', '09', '10', 'Jack', 'Queen', 'King']
+        ranks = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King']
         self.deck = []
         for suit in suits:
             for rank in ranks:
@@ -89,23 +89,27 @@ class Hand:
     def __init__(self, cards):
         self._cards = cards
         self.card_value = 0
-        self.ace_count = 0
-        self.values = {'02': 2, '03': 3, '04': 4,
-                  '05': 5, '06': 6, '07': 7, 
-                  '08': 8, '09': 9, '10': 10, 
-                  'Ja': 10, 'Qu': 10, 'Ki': 10,
-                  'Ac': 11}
-
+  
     def value_of_cards(self):
+        """Re-initialise, in case we have called this before"""
+        self.card_value = 0
+        ace_count = 0
+        
         """Calculates the value of the cards in play"""
         for card in self._cards:
-            if card[:2] == 'Ac':
-                self.ace_count += 1
-            self.card_value += self.values[card[:2]]
+            rank = card.split()[0]
+            if rank == 'Ace':
+                ace_count += 1
+                self.card_value += 11
+            elif rank in set(('Jack', 'Queen', 'King')):
+                self.card_value += 10
+            else:
+                self.card_value += int(rank)
+            
         """Adjust values of aces if player is bust"""
-        while self.card_value > 21 and self.ace_count > 0:
+        while self.card_value > 21 and ace_count > 0:
             self.card_value -= 10
-            self.ace_count -= 1
+            ace_count -= 1
         return self.card_value
     
 class Person:
@@ -113,14 +117,13 @@ class Person:
     def __init__(self):
         self._cards = [] 
         self._bust = False
-        self.aces = {"Ace of Spades", "Ace of Diamonds", "Ace of Hearts", "Ace of Clubs"}
            
     def take_card(self, card):
         """This function allows a player to hit after the initial deal"""
         self._cards.append(card)
 
     def get_value(self):
-        """Gets the value of each players' hand"""
+        """Gets the value of each player's hand"""
         hand = Hand(self._cards) 
         return hand.value_of_cards()
 
