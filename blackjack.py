@@ -73,13 +73,13 @@ class BlackJackGame:
 
     def result(self):
         """Function that returns the result of the game"""
-        print(f"You: {self._player._cards} [{self._player.ace_value()}]")
-        print(f"Dealer: {self._dealer._cards} [{self._dealer.ace_value()}]")
+        print(f"You: {self._player._cards} [{self._player.get_value()}]")
+        print(f"Dealer: {self._dealer._cards} [{self._dealer.get_value()}]")
         if self._player._blackjack == True:
             print("Blackjack!")
         elif self._dealer._blackjack == True:
             print("Dealer has Blackjack! Dealer Wins!")
-        elif (self._player.ace_value() < self._dealer.ace_value() and self._dealer._bust == False) or self._player._bust == True:
+        elif (self._player.get_value() < self._dealer.get_value() and self._dealer._bust == False) or self._player._bust == True:
             # Dealer wins if: player is bust or has a lower card value
             print("Dealer Wins!")
         elif (self._player.get_value() > self._dealer.get_value() and self._player._bust == False) or self._dealer._bust == True:
