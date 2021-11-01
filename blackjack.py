@@ -23,7 +23,7 @@ class BlackJackGame:
     def __init__(self):
         x = PlayingCardDeck()
         x.shuffle()
-        self._deck = x.deck * 6    
+        self._deck = x.deck * 6  # Put 6 decks of cards in the game    
         self._dealer = Dealer()
         self._player = Player()
         self.player_finished = False
@@ -72,9 +72,14 @@ class BlackJackGame:
         BlackJackGame.result(self)  # Display result of the game
 
     def result(self):
-        print(f"You: {self._player._cards} [{self._player.get_value()}]")
-        print(f"Dealer: {self._dealer._cards} [{self._dealer.get_value()}]")
-        if (self._player.get_value() < self._dealer.get_value() and self._dealer._bust == False) or self._player._bust == True:
+        """Function that returns the result of the game"""
+        print(f"You: {self._player._cards} [{self._player.ace_value()}]")
+        print(f"Dealer: {self._dealer._cards} [{self._dealer.ace_value()}]")
+        if self._player._blackjack == True:
+            print("Blackjack!")
+        elif self._dealer._blackjack == True:
+            print("Dealer has Blackjack! Dealer Wins!")
+        elif (self._player.ace_value() < self._dealer.ace_value() and self._dealer._bust == False) or self._player._bust == True:
             # Dealer wins if: player is bust or has a lower card value
             print("Dealer Wins!")
         elif (self._player.get_value() > self._dealer.get_value() and self._player._bust == False) or self._dealer._bust == True:
@@ -90,11 +95,11 @@ class Hand:
         self._cards = cards
         self.card_value = 0
         self.ace_count = 0
-        self.values = {'02': 2, '03': 3, '04': 4,
-                  '05': 5, '06': 6, '07': 7, 
-                  '08': 8, '09': 9, '10': 10, 
-                  'Ja': 10, 'Qu': 10, 'Ki': 10,
-                  'Ac': 11}
+        self.values =  {'02': 2, '03': 3, '04': 4,
+                        '05': 5, '06': 6, '07': 7, 
+                        '08': 8, '09': 9, '10': 10, 
+                        'Ja': 10, 'Qu': 10, 'Ki': 10,
+                        'Ac': 11}
 
     def value_of_cards(self):
         """Calculates the value of the cards in play"""
@@ -112,9 +117,10 @@ class Person:
 
     def __init__(self):
         self._cards = [] 
+        self._hand = Hand(self._cards)
         self._bust = False
-        self.aces = {"Ace of Spades", "Ace of Diamonds", "Ace of Hearts", "Ace of Clubs"}
-           
+        self._blackjack = False
+                   
     def take_card(self, card):
         """This function allows a player to hit after the initial deal"""
         self._cards.append(card)
@@ -123,7 +129,6 @@ class Person:
         """Gets the value of each players' hand"""
         hand = Hand(self._cards) 
         return hand.value_of_cards()
-
 class Player(Person):
     def __init__(self):
         super().__init__()    
