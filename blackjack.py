@@ -28,7 +28,6 @@ class BlackJackGame:
         self._player = Player()
         self.player_finished = False
         self.dealer_finished = False
-        
     
     def card_deal(self):       
         """Deal 2 cards to the player and the dealer"""
@@ -45,6 +44,14 @@ class BlackJackGame:
         print(f"The Dealer has {self._dealer._cards[0]}.")
         if self._player.get_value() == 21:  # Auto stand on being dealt 21
             self.player_finished = True
+            if self._dealer.get_value() != 21:  # Check if dealer also has 21, if not then blackjack!
+                self._player._blackjack = True
+                self.dealer_finished = True
+        if self._dealer.get_value() == 21 and self._player.get_value() < 21:
+            # Check if dealer has blackjack
+            self._dealer._blackjack = True
+            self.player_finished = True
+            
         while not self.player_finished:
             player_choice = input(f"You have {self._player.get_value()}. Do you want to stand or hit? ")
             print("------------------------------------------------------------------------------------------------")
@@ -95,6 +102,7 @@ class Hand:
             if card[:2] == 'Ac':
                 self.ace_count += 1
             self.card_value += self.values[card[:2]]
+        """Adjust values of aces if player is bust"""
         while self.card_value > 21 and self.ace_count > 0:
             self.card_value -= 10
             self.ace_count -= 1
