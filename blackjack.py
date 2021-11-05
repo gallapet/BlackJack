@@ -51,8 +51,12 @@ class BlackJackGame:
             # Check if dealer has blackjack
             self._dealer._blackjack = True
             self.player_finished = True
+            self.dealer_finished = True
             
         while not self.player_finished:
+            if self._player.get_value() == 21:
+                self.player_finished = True
+                break
             player_choice = input(f"You have {self._player.get_value()}. Do you want to stand or hit? ")
             print("------------------------------------------------------------------------------------------------")
             if player_choice.startswith("h") and self._player.get_value() < 21:
@@ -74,7 +78,11 @@ class BlackJackGame:
     def result(self):
         print(f"You: {self._player._cards} [{self._player.get_value()}]")
         print(f"Dealer: {self._dealer._cards} [{self._dealer.get_value()}]")
-        if (self._player.get_value() < self._dealer.get_value() and self._dealer._bust == False) or self._player._bust == True:
+        if self._player._blackjack == True:
+            print("Blackjack! You win!")
+        elif self._dealer._blackjack == True:
+            print("Dealer has blackjack! Dealer wins!")
+        elif (self._player.get_value() < self._dealer.get_value() and self._dealer._bust == False) or self._player._bust == True:
             # Dealer wins if: player is bust or has a lower card value
             print("Dealer Wins!")
         elif (self._player.get_value() > self._dealer.get_value() and self._player._bust == False) or self._dealer._bust == True:
@@ -113,6 +121,7 @@ class Person:
     def __init__(self):
         self._cards = [] 
         self._bust = False
+        self._blackjack = False
         self.aces = {"Ace of Spades", "Ace of Diamonds", "Ace of Hearts", "Ace of Clubs"}
            
     def take_card(self, card):
