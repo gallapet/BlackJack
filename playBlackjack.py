@@ -3,9 +3,8 @@
 import blackjack  # imports the blackjack module
 
 """Set up the game"""
-p = blackjack.PlayingCardDeck()
-g = blackjack.BlackJackGame()
-g.card_deal()
+game = blackjack.BlackJackGame()
+game.card_deal()
 
 """Play the game"""
-g.play()
+game.play()
