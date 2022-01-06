@@ -21,9 +21,9 @@ class BlackJackGame:
     """Deal 2 cards to the player and the dealer, only show one of the dealer's cards."""
     
     def __init__(self):
-        x = PlayingCardDeck()
-        x.shuffle()
-        self._deck = x.deck * 6  # Put 6 decks of cards in the game    
+        playingCardDeck = PlayingCardDeck()
+        playingCardDeck.shuffle()
+        self._deck = playingCardDeck.deck * 6  # Put 6 decks of cards in the game    
         self._dealer = Dealer()
         self._player = Player()
         self.player_finished = False
