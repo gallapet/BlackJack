@@ -2,12 +2,12 @@ from Dealer import Dealer
 from Player import Player
 from Deck import PlayingCardDeck
 
-
 class BlackJackGame:
     """Deal 2 cards to the player and the dealer, only show one of the dealer's cards."""
 
     def __init__(self):
         playing_card_deck = PlayingCardDeck()
+        playing_card_deck.make_deck()
         playing_card_deck.shuffle()
         self.deck = playing_card_deck.deck * 6  # Put 6 decks of cards in the game
         self.dealer = Dealer()

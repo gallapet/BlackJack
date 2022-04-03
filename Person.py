@@ -1,7 +1,6 @@
 from Hand import Hand
 from Deck import PlayingCardDeck
 
-
 class Person:
 
     def __init__(self):
