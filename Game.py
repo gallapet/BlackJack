@@ -20,9 +20,9 @@ class BlackJackGame:
             self.dealer.take_card(self.deck)
 
     def play(self):
-        """Function that displays the player's hand and one of the dealer's cards. Then gives the player a choice of"""
-        """stand(stop) or hit(play)"""
-        """After every card dealt it checks if either person is bust and continues if not."""
+        """Function that displays the player's hand and one of the dealer's cards. Then gives the player a choice of
+        stand(stop) or hit(play)
+        After every card dealt it checks if either person is bust and continues if not."""
         print("------------------------------------------------------------------------------------------------")
         print(f"You have been dealt {self.player.cards[0]} and {self.player.cards[1]}.")
         print(f"The Dealer has {self.dealer.cards[0]}.")
@@ -91,5 +91,3 @@ class BlackJackGame:
     def player_hit(self):
         self.player.take_card(self.deck)
         print("You now have " + ' and '.join(self.player.cards))
-        # if self.player.get_if_bust():  # Check if player is bust
-        #     self.dealer.is_finished()
