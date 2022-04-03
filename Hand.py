@@ -1,7 +1,7 @@
 class Hand:
 
     def __init__(self, cards):
-        self._cards = cards
+        self.cards = cards
         self.card_value = 0
         self.ace_count = 0
         self.values = {'02': 2, '03': 3, '04': 4,
@@ -12,7 +12,7 @@ class Hand:
 
     def value_of_cards(self):
         """Calculates the value of the cards in play"""
-        for card in self._cards:
+        for card in self.cards:
             if card[:2] == 'Ac':
                 self.ace_count += 1
             self.card_value += self.values[card[:2]]
@@ -21,3 +21,6 @@ class Hand:
             self.card_value -= 10
             self.ace_count -= 1
         return self.card_value
+
+    def players_hand(self):
+        return self.cards
