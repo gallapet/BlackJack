@@ -2,8 +2,8 @@ import sys
 
 import pytest
 
-sys.path.append('C:/Users/peter/Documents/Code/Python/BlackJack')
-
+# sys.path.append('C:/Users/peter/Documents/Code/Python/BlackJack')
+sys.path.append('D:/Peter/Code/Python/BlackJack')
 from Game import BlackJackGame
 from Deck import PlayingCardDeck
 from Player import Player

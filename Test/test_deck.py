@@ -1,6 +1,7 @@
 import sys
 
-sys.path.append('C:/Users/peter/Documents/Code/Python/BlackJack')
+# sys.path.append('C:/Users/peter/Documents/Code/Python/BlackJack')
+sys.path.append('D:/Peter/Code/Python/BlackJack')
 
 from Deck import PlayingCardDeck
 

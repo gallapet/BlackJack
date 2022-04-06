@@ -3,7 +3,7 @@ from Player import Player
 from Deck import PlayingCardDeck
 
 class BlackJackGame:
-    """Deal 2 cards to the player and the dealer, only show one of the dealer's cards."""
+    """Deal cards to the player and the dealer, then play the game"""
 
     def __init__(self):
         playing_card_deck = PlayingCardDeck()
@@ -15,6 +15,7 @@ class BlackJackGame:
 
     def initial_card_deal(self):
         """Deal 2 cards to the player and the dealer"""
+
         for i in range(2):
             self.player.take_card(self.deck)
             self.dealer.take_card(self.deck)
@@ -23,6 +24,7 @@ class BlackJackGame:
         """Function that displays the player's hand and one of the dealer's cards. Then gives the player a choice of
         stand(stop) or hit(play)
         After every card dealt it checks if either person is bust and continues if not."""
+
         print("------------------------------------------------------------------------------------------------")
         print(f"You have been dealt {self.player.cards[0]} and {self.player.cards[1]}.")
         print(f"The Dealer has {self.dealer.cards[0]}.")

@@ -21,6 +21,3 @@ class Hand:
             self.card_value -= 10
             self.ace_count -= 1
         return self.card_value
-
-    def players_hand(self):
-        return self.cards
